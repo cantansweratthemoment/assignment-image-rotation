@@ -16,9 +16,17 @@ struct image rotateImage(const struct image origin) {
     struct image newImage = {.width = origin.height, .height = origin.width, .data = newData};
     for (uint64_t i = 0; i < origin.height; i++) {
         for (size_t j = 0; j < origin.width; j++) {
-            newData[j * origin.height + (origin.height - 1 - i)] = origin.data[i * origin.width + j];
+            newData[getNewDataAddress(i, j, origin)] = origin.data[getOldDataAddress(i, j, origin)];
         }
     }
     print("Поворачиваем картинку...\n");
     return newImage;
+}
+
+size_t getNewDataAddress(size_t i, size_t j, const struct image origin) {
+    return (j * origin.height + (origin.height - 1 - i));
+}
+
+size_t getOldDataAddress(size_t i, size_t j, const struct image origin) {
+    return (i * origin.width + j);
 }

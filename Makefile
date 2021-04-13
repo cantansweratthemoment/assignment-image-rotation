@@ -18,8 +18,11 @@ main.o: main.c
 file-worker.o: file-worker.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
-rotate-image: main.o logger.o bmp-worker.o image.c file-worker.o
+header.o: header.c
+	$(CC) -c $(CFLAGS) $< -o $@
+
+rotate-image: main.o logger.o bmp-worker.o image.c file-worker.o header.o
 	$(CC) -o rotate-image $^
 
 clean:
-	rm -f main.o image.o util.o bmp.o rotate-image
+	rm -f main.o logger.o bmp-worker.o image.c file-worker.o header.o rotate-image
